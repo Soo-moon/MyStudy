@@ -48,18 +48,27 @@ class UserRepository(application: Application) {
             }
 
             override fun onResponse(call: Call<Data>, response: Response<Data>) {
+                if (response.body()!!.version != )
+
+
                 data.value = response.body()!!.data.get(index)
-                CoroutineScope(Dispatchers.IO).launch {
-                    for (i in 0..(response.body()!!.data.size)-1){
-                        db.wordDao().insert(response.body()!!.data.get(i))
-                    }
-                }
                 Log.d("test", index.toString())
                 Log.d("test", data.value.toString())
             }
         })
         return data
 
+    }
+
+
+    fun DataUpdate(response: Response<Data>) {
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+            for (i in 0..(response.body()!!.data.size) - 1) {
+                db.wordDao().insert(response.body()!!.data.get(i))
+            }
+        }
     }
 
 }

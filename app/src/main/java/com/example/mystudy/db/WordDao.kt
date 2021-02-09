@@ -9,8 +9,6 @@ import androidx.room.Query
 @Dao
 interface WordDao {
 
-    
-
     @Query("SELECT * FROM BaseWord")
     fun getAll(): LiveData<List<BaseWord>>
 
@@ -22,4 +20,6 @@ interface WordDao {
 
     @Delete
     fun delete(obj: BaseWord)
+
+
 }
