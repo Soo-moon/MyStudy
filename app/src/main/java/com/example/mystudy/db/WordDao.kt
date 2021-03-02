@@ -1,25 +1,19 @@
 package com.example.mystudy.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.MutableLiveData
+import androidx.room.*
 
 @Dao
 interface WordDao {
 
-    
-
     @Query("SELECT * FROM BaseWord")
-    fun getAll(): LiveData<List<BaseWord>>
+    fun getAll(): List<BaseWord>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(obj : BaseWord)
 
-    @Query("SELECT * FROM BASEWORD WHERE ID = :index")
-    fun getData(index : Int): LiveData<BaseWord>
+    @Query("SELECT * FROM BaseWord WHERE ID = :index")
+    fun getData(index : Int): BaseWord
 
-    @Delete
-    fun delete(obj: BaseWord)
 }
