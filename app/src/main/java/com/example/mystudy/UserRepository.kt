@@ -5,23 +5,18 @@ import android.os.Build
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import com.example.mystudy.Net.Data
 import com.example.mystudy.Net.RetrofitService
 import com.example.mystudy.db.BaseWord
-import com.example.mystudy.db.MyWord
 import com.example.mystudy.db.WordDatabase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
-import java.util.*
-import kotlin.NullPointerException as NullPointerException
 
 
 class UserRepository(application: Application) {
@@ -58,9 +53,7 @@ class UserRepository(application: Application) {
                         Log.d("test", db.getVersion().toString())
                     }
                 }
-
             }
-
             override fun onFailure(call: Call<Data>, t: Throwable) {
                 Log.d("test", "error retrofit")
             }
@@ -80,5 +73,6 @@ class UserRepository(application: Application) {
         CoroutineScope(Dispatchers.IO).launch {
             db.myWordDao().insert(data.cast(data))
         }
+
     }
 }

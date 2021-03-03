@@ -8,12 +8,8 @@ import androidx.room.RoomDatabase
 @Database(entities = [BaseWord::class, MyWord::class], version = 1, exportSchema = false)
 abstract class WordDatabase : RoomDatabase() {
 
-    var dbVersion : Int = 0
-
-
     abstract fun wordDao(): WordDao
     abstract fun myWordDao() : MyWordDao
-
 
     private var dbVersion : Float = 0.0F
     fun getVersion() : Float = dbVersion
@@ -41,7 +37,5 @@ abstract class WordDatabase : RoomDatabase() {
 
 
     }
-
-    fun getVersion() : Int = dbVersion
 
 }

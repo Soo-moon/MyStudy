@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystudy.db.MyWord
 import com.example.mystudy.db.WordDatabase
@@ -20,21 +23,13 @@ import kotlinx.coroutines.launch
 class NoteAdapter(application: Application) :
     RecyclerView.Adapter<NoteAdapter.CustomViewHolder>() {
 
-
-    private val db : WordDatabase = WordDatabase.getInstance(application)!!
-    private lateinit var noteList : List<MyWord>
-    private var tts : TextToSpeech? =null
+    lateinit var noteList : List<MyWord>
+    val db = WordDatabase.getInstance(application)
 
     init {
-        tts = TextToSpeech(application){
-            if (it != TextToSpeech.ERROR)
-                tts!!.setPitch(0.6F)
-        }
-
         CoroutineScope(Dispatchers.IO).launch {
-            noteList = db.myWordDao().getAll()
+            noteList = db!!.myWordDao().getAll()
         }
-
     }
 
     override fun onCreateViewHolder(
@@ -46,27 +41,25 @@ class NoteAdapter(application: Application) :
         return CustomViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return noteList.size
-    }
+    override fun getItemCount(): Int = noteList.size
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.word.text = noteList[position].word
         holder.mean.text = noteList[position].mean
-        holder.voice.setOnClickListener {
-            tts!!.speak(noteList[position].word , TextToSpeech.QUEUE_FLUSH,null,null)
-        }
     }
-
-
-
 
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val word: TextView = itemView.findViewById(R.id.wordview)
         val mean: TextView = itemView.findViewById(R.id.meanview)
-        val voice: ImageButton = itemView.findViewById(R.id.item_voice)
     }
+
+    fun setlist(noteList : List<MyWord>){
+        this.noteList = noteList
+        notifyDataSetChanged()
+    }
+
+
 
 }
