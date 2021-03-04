@@ -26,13 +26,20 @@ class MyNote : AppCompatActivity(), Dialog.DialogListener {
 
     private val db: WordDatabase? = WordDatabase.getInstance(this)
     lateinit var recycle: RecyclerView
+    private var noteAdapter : NoteAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_note)
 
         recycle = findViewById(R.id.recycle)
-        recycle.adapter = NoteAdapter(application)
+
+
+        db!!.myWordDao().getAll().observe(this , Observer {
+            noteAdapter = NoteAdapter(application , it)
+            recycle.adapter = noteAdapter
+        })
+
         recycle.layoutManager = LinearLayoutManager(application)
 
 
@@ -47,6 +54,8 @@ class MyNote : AppCompatActivity(), Dialog.DialogListener {
             val dialog = Dialog()
             dialog.show(supportFragmentManager, "string?")
         }
+
+
 
 
     }

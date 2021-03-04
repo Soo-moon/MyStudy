@@ -20,17 +20,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NoteAdapter(application: Application) :
+class NoteAdapter(application: Application , noteList: List<MyWord>) :
     RecyclerView.Adapter<NoteAdapter.CustomViewHolder>() {
 
-    lateinit var noteList : List<MyWord>
     val db = WordDatabase.getInstance(application)
-
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            noteList = db!!.myWordDao().getAll()
-        }
-    }
+    var noteList = noteList
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

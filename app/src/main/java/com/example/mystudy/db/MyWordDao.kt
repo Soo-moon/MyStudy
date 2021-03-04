@@ -8,7 +8,7 @@ import androidx.room.*
 
 interface MyWordDao {
     @Query("SELECT * FROM MyWord")
-    fun getAll(): List<MyWord>
+    fun getAll(): LiveData<List<MyWord>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(obj: MyWord)

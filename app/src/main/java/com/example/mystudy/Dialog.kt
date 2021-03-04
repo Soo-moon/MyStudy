@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.loader.AssetsProvider
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
@@ -32,7 +34,9 @@ class Dialog : DialogFragment() {
             val wordEdit =view.findViewById<EditText>(R.id.wordEdit)
             val meanEdit = view.findViewById<EditText>(R.id.meanEdit)
 
+
             builder.setMessage(R.string.Dialogtittle)
+
             builder.setView(view)
             builder.setPositiveButton(R.string.add){
                     dialogInterface: DialogInterface, i: Int -> listener.onDialogPositiveClick(this,
