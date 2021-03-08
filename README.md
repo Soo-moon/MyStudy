@@ -10,6 +10,7 @@ Java로 작성했던 rmainf를 리팩토링 하였습니다.
 - ViewModel , LiveData , Room , Repository 
 - Retrofit
 - Databinding
+- -coroutine
 <br><br>
 
 ## 기능 
